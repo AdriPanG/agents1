@@ -1,13 +1,15 @@
 """
 Simple FastAPI application for the Deep Research Agent System
 """
+import logging
+import asyncio
+import uuid
+
+from datetime import datetime
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-import asyncio
-import uuid
-from datetime import datetime
-import logging
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -18,7 +20,6 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from agents_manager import AgentManager
-from config import Config
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -35,8 +36,7 @@ app = FastAPI(
 research_sessions = {}
 
 # Initialize configuration and agent manager
-config = Config()
-agent_manager = AgentManager(model_name=config.agent.model_name)
+agent_manager = AgentManager(model_name="gpt-4o-mini")
 
 
 # Pydantic models for API requests/responses

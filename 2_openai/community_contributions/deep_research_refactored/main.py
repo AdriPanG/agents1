@@ -1,5 +1,4 @@
 from agents_manager import AgentManager
-from config import Config
 from dotenv import load_dotenv
 import asyncio
 

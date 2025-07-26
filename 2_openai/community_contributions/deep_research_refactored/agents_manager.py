@@ -1,12 +1,9 @@
 import asyncio
-import os
 import logging
 from typing import Dict, Optional
 
 from agents import Agent, WebSearchTool, trace, Runner, gen_trace_id, function_tool
 from agents.model_settings import ModelSettings
-from pydantic import BaseModel, Field
-from dotenv import load_dotenv
 
 from typing import Dict
 from prompts import SEARCH_AGENT_INSTRUCTIONS, PLANNER_AGENT_INSTRUCTIONS, EMAIL_AGENT_INSTRUCTIONS, WRITER_AGENT_INSTRUCTIONS
