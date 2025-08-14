@@ -76,8 +76,10 @@ tools = [{"type": "function", "function": record_user_details_json},
 class Me:
 
     def __init__(self):
-        self.openai = OpenAI()
-        self.name = "Ed Donner"
+        self.GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+        self.google_api_key = os.getenv("GOOGLE_API_KEY")
+        self.openai = OpenAI(base_url=self.GEMINI_BASE_URL, api_key=self.google_api_key)
+        self.name = "Adrián Panadero González"
         reader = PdfReader("me/linkedin.pdf")
         self.linkedin = ""
         for page in reader.pages:
@@ -116,7 +118,7 @@ If the user is engaging in discussion, try to steer them towards getting in touc
         messages = [{"role": "system", "content": self.system_prompt()}] + history + [{"role": "user", "content": message}]
         done = False
         while not done:
-            response = self.openai.chat.completions.create(model="gpt-4o-mini", messages=messages, tools=tools)
+            response = self.openai.chat.completions.create(model="gemini-2.5-flash", messages=messages, tools=tools)
             if response.choices[0].finish_reason=="tool_calls":
                 message = response.choices[0].message
                 tool_calls = message.tool_calls
