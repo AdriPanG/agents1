@@ -9,9 +9,6 @@ from debate1.crew import Debate1
 from dotenv import load_dotenv
 load_dotenv()
 
-print(os.getenv("GOOGLE_API_KEY"))  # Debe mostrar la clave
-print(os.getenv("GEMINI_API_KEY"))  # Si usas este nombre
-
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
 
