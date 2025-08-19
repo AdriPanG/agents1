@@ -4,7 +4,7 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from dotenv import load_dotenv
 from langgraph.prebuilt import ToolNode
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from typing import List, Any, Optional, Dict
@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 from sidekick_tools import playwright_tools, other_tools
 import uuid
 import asyncio
+import os
 from datetime import datetime
 
 load_dotenv(override=True)
@@ -45,9 +46,19 @@ class Sidekick:
     async def setup(self):
         self.tools, self.browser, self.playwright = await playwright_tools()
         self.tools += await other_tools()
-        worker_llm = ChatOpenAI(model="gpt-4o-mini")
+        worker_llm = AzureChatOpenAI(
+            model="gpt-4o-mini", 
+            api_key=os.getenv("AZURE_OPENAI_API_KEY"), 
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"), 
+            api_version="2024-12-01-preview"
+        )
         self.worker_llm_with_tools = worker_llm.bind_tools(self.tools)
-        evaluator_llm = ChatOpenAI(model="gpt-4o-mini")
+        evaluator_llm = AzureChatOpenAI(
+            model="gpt-4o-mini", 
+            api_key=os.getenv("AZURE_OPENAI_API_KEY"), 
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"), 
+            api_version="2024-12-01-preview"
+        )
         self.evaluator_llm_with_output = evaluator_llm.with_structured_output(EvaluatorOutput)
         await self.build_graph()
 

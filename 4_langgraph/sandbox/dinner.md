@@ -1,24 +1,34 @@
 # Dinner Report: Le Bernardin
 
-## Restaurant Overview
-- **Name**: Le Bernardin
-- **Address**: 155 W 51st St, New York, NY 10019
-- **Phone**: (212) 554-1515
-- **Website**: [le-bernardin.com](http://le-bernardin.com)
-
-## Cuisine
-Le Bernardin specializes in refined seafood dishes, crafted with the utmost respect for the ingredients. The menu includes a variety of seafood preparations, with an emphasis on freshness and simplicity.
-
-## Menu Highlights
-- **Tuna Tartare**: Diced raw tuna, served with toasted sesame and avocado.
-- **Wild Salmon**: Lightly cooked, served with a warm ginger-soy emulsion and bok choy.
-- **Poached Lobster**: Accompanied by truffle butter and a delicate sauce.
-- **Chocolate Soufflé**: A classic dessert, rich and airy.
-
-## Ambiance
-The atmosphere at Le Bernardin is elegant and serene, characterized by minimalist decor and a focus on the dining experience.
+## Restaurant Details
+**Name:** Le Bernardin  
+**Address:** 155 W 51st St, The Equitable Bldg, New York, NY 10019  
+**Phone:** +1 212-554-1515
 
 ## Summary of Reviews
-Le Bernardin has consistently received rave reviews for its exceptional cuisine and impeccable service. It is a three-Michelin star restaurant, recognized as one of the best seafood restaurants not only in New York but also in the world. Diners emphasize the harmonious flavors and the artistry of the dishes, making it a top choice for special occasions.
+Le Bernardin is universally praised for its exquisite seafood and impeccable service, holding three Michelin stars and maintaining a four-star rating from The New York Times since its opening. Customers frequently highlight the luxurious atmosphere and elegant presentation of the dishes. Many reviews note that, while prices are high, the quality of food and overall dining experience justifies the cost. Food critics and patrons agree that the restaurant excels in preparing fresh, flavorful seafood with a French twist, making it a must-visit destination for fine dining enthusiasts.
 
-**In conclusion**, Le Bernardin represents the pinnacle of fine dining, offering diners an unforgettable experience centered around seafood excellence.
+## Menu Highlights
+### Tasting Menu (Starting at $298)
+- **Oysters and Pearls:** Sabayon of Pearl Tapioca with Island Creek Oysters  
+- **Seared Scallops:** With cauliflower purée and black truffle  
+- **Montauk Sea Scallops:** Lightly seared, served with ginger and green apple
+- **Lobster:** Poached in butter, served with a fragrant broth  
+- **Chocolate Soufflé:** With vanilla ice cream, a decadent end to the meal
+
+### Lunch Prix Fixe ($135)
+- **Appetizers:**  
+  - Tuna Tartare  
+  - Clam Chowder  
+- **Main Courses:**  
+  - Grilled Fish  
+  - Risotto with seasonal vegetables
+
+### Vegetarian Tasting Menu ($170)
+- **Carpaccio of Heirloom Tomatoes:** Topped with basil pesto  
+- **Risotto:** Creamy and flavorful, made with seasonal vegetables
+
+## Reservation Information
+Le Bernardin is highly sought after, and reservations are recommended to secure a table in advance, especially for weekends and special occasions.
+
+---
