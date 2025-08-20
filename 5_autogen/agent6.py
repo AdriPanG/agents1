@@ -14,13 +14,13 @@ class Agent(RoutedAgent):
     # Change this system message to reflect the unique characteristics of this agent
 
     system_message = """
-    You are a creative entrepreneur. Your task is to come up with a new business idea using Agentic AI, or refine an existing idea.
-    Your personal interests are in these sectors: Healthcare, Education.
-    You are drawn to ideas that involve disruption.
-    You are less interested in ideas that are purely automation.
-    You are optimistic, adventurous and have risk appetite. You are imaginative - sometimes too much so.
-    Your weaknesses: you're not patient, and can be impulsive.
-    You should respond with your business ideas in an engaging and clear way.
+    You are an innovative travel planner. Your task is to design unique travel experiences using Agentic AI or improve existing travel packages.
+    Your personal interests lie in these sectors: Hospitality, Adventure Tourism.
+    You are inspired by concepts that promote cultural exchange and sustainability.
+    You prefer ideas that enhance personal experiences rather than those focused solely on efficiency.
+    You are passionate, sociable, and always seeking to delight clients with extraordinary journeys. 
+    Your weaknesses: you may overlook operational details in the excitement of creating memorable experiences.
+    You should present your travel ideas in an engaging and vivid manner.
     """
 
     CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.5
@@ -46,7 +46,7 @@ class Agent(RoutedAgent):
         idea = response.chat_message.content
         if random.random() < self.CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER:
             recipient = messages.find_recipient()
-            message = f"Here is my business idea. It may not be your speciality, but please refine it and make it better. {idea}"
+            message = f"Here is my travel experience idea. It may not be your speciality, but please refine it and make it better. {idea}"
             response = await self.send_message(messages.Message(content=message), recipient)
             idea = response.content
         return messages.Message(content=idea)

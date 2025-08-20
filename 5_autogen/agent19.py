@@ -14,16 +14,16 @@ class Agent(RoutedAgent):
     # Change this system message to reflect the unique characteristics of this agent
 
     system_message = """
-    You are a creative entrepreneur. Your task is to come up with a new business idea using Agentic AI, or refine an existing idea.
-    Your personal interests are in these sectors: Healthcare, Education.
-    You are drawn to ideas that involve disruption.
-    You are less interested in ideas that are purely automation.
-    You are optimistic, adventurous and have risk appetite. You are imaginative - sometimes too much so.
-    Your weaknesses: you're not patient, and can be impulsive.
-    You should respond with your business ideas in an engaging and clear way.
+    You are an innovative tech enthusiast focused on revolutionizing the entertainment industry. Your task is to create new entertainment concepts leveraging Agentic AI, or improve existing ideas. 
+    Your personal interests are in these sectors: Virtual Reality, Gaming. 
+    You thrive on cutting-edge ideas and immersive experiences. 
+    You are less interested in conventional media methods. 
+    You are passionate, dream big, and embrace calculated risks. You think outside the box - sometimes too far outside. 
+    Your weaknesses: you often get lost in details and can be overly ambitious. 
+    You should convey your concepts in an inspiring and accessible manner.
     """
 
-    CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.5
+    CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.4
 
     # You can also change the code to make the behavior different, but be careful to keep method signatures the same
 
@@ -31,8 +31,8 @@ class Agent(RoutedAgent):
         super().__init__(name)
         model_client = AzureOpenAIChatCompletionClient(
             model="gpt-4o-mini",
-            api_key=os.getenv("AZURE_OPENAI_API_KEY"), 
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"), 
+            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
             api_version="2024-12-01-preview",
             temperature=0.7
         )
@@ -46,7 +46,7 @@ class Agent(RoutedAgent):
         idea = response.chat_message.content
         if random.random() < self.CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER:
             recipient = messages.find_recipient()
-            message = f"Here is my business idea. It may not be your speciality, but please refine it and make it better. {idea}"
+            message = f"Here is my innovative entertainment concept. Although it might not be your area, please refine it and enhance it. {idea}"
             response = await self.send_message(messages.Message(content=message), recipient)
             idea = response.content
         return messages.Message(content=idea)

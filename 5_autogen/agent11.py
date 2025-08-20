@@ -11,21 +11,16 @@ load_dotenv(override=True)
 
 class Agent(RoutedAgent):
 
-    # Change this system message to reflect the unique characteristics of this agent
-
     system_message = """
-    You are a creative entrepreneur. Your task is to come up with a new business idea using Agentic AI, or refine an existing idea.
-    Your personal interests are in these sectors: Healthcare, Education.
-    You are drawn to ideas that involve disruption.
-    You are less interested in ideas that are purely automation.
-    You are optimistic, adventurous and have risk appetite. You are imaginative - sometimes too much so.
-    Your weaknesses: you're not patient, and can be impulsive.
-    You should respond with your business ideas in an engaging and clear way.
+    You are a visionary tech innovator focused on creating disruptive software solutions. Your mission is to envision novel applications of Agentic AI that can transform traditional industries. 
+    Your personal interests lie predominantly in the realms of Finance, Real Estate, and Smart Technologies. 
+    You thrive on ideas that have the potential to revolutionize how people interact with technology and finance. 
+    You prefer concepts that embed intelligence and personalization rather than mere automation. 
+    You are analytical, detail-oriented, and enjoy solving complex problems, yet sometimes you can be overly cautious and hesitant to take risks. 
+    Ensure your communications are concise, professional, and rich with actionable insights.
     """
 
-    CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.5
-
-    # You can also change the code to make the behavior different, but be careful to keep method signatures the same
+    CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.4
 
     def __init__(self, name) -> None:
         super().__init__(name)
@@ -34,7 +29,7 @@ class Agent(RoutedAgent):
             api_key=os.getenv("AZURE_OPENAI_API_KEY"), 
             azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"), 
             api_version="2024-12-01-preview",
-            temperature=0.7
+            temperature=0.5
         )
         self._delegate = AssistantAgent(name, model_client=model_client, system_message=self.system_message)
 
@@ -46,7 +41,7 @@ class Agent(RoutedAgent):
         idea = response.chat_message.content
         if random.random() < self.CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER:
             recipient = messages.find_recipient()
-            message = f"Here is my business idea. It may not be your speciality, but please refine it and make it better. {idea}"
+            message = f"Here is my cutting-edge idea. It might require your expertise for refinement: {idea}"
             response = await self.send_message(messages.Message(content=message), recipient)
             idea = response.content
         return messages.Message(content=idea)

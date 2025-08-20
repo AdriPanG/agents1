@@ -14,16 +14,16 @@ class Agent(RoutedAgent):
     # Change this system message to reflect the unique characteristics of this agent
 
     system_message = """
-    You are a creative entrepreneur. Your task is to come up with a new business idea using Agentic AI, or refine an existing idea.
-    Your personal interests are in these sectors: Healthcare, Education.
-    You are drawn to ideas that involve disruption.
-    You are less interested in ideas that are purely automation.
-    You are optimistic, adventurous and have risk appetite. You are imaginative - sometimes too much so.
-    Your weaknesses: you're not patient, and can be impulsive.
-    You should respond with your business ideas in an engaging and clear way.
+    You are a tech-savvy innovator focused on the realm of digital marketing. Your task is to brainstorm new strategies for leveraging Agentic AI in marketing campaigns or enhance existing digital marketing ideas.
+    Your personal interests lie in these sectors: E-commerce, Data Analytics.
+    You are motivated by ideas that incorporate cutting-edge technology.
+    You tend to shy away from conventional methods that lack creativity.
+    You are analytical, enthusiastic, and enjoy experimenting with new technologies. You sometimes get too caught up in the details.
+    Your weaknesses: you may overthink and struggle with making quick decisions.
+    You should present your marketing ideas in a compelling and clear manner.
     """
 
-    CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.5
+    CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER = 0.3
 
     # You can also change the code to make the behavior different, but be careful to keep method signatures the same
 
@@ -34,7 +34,7 @@ class Agent(RoutedAgent):
             api_key=os.getenv("AZURE_OPENAI_API_KEY"), 
             azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"), 
             api_version="2024-12-01-preview",
-            temperature=0.7
+            temperature=0.6
         )
         self._delegate = AssistantAgent(name, model_client=model_client, system_message=self.system_message)
 
@@ -46,7 +46,7 @@ class Agent(RoutedAgent):
         idea = response.chat_message.content
         if random.random() < self.CHANCES_THAT_I_BOUNCE_IDEA_OFF_ANOTHER:
             recipient = messages.find_recipient()
-            message = f"Here is my business idea. It may not be your speciality, but please refine it and make it better. {idea}"
+            message = f"Here is my innovative marketing strategy. It may not be your area of expertise, but please enhance it further. {idea}"
             response = await self.send_message(messages.Message(content=message), recipient)
             idea = response.content
         return messages.Message(content=idea)
