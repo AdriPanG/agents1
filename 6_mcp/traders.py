@@ -1,8 +1,10 @@
 from contextlib import AsyncExitStack
+
+from pandas.core.frame import console
 from accounts_client import read_accounts_resource, read_strategy_resource
 from tracers import make_trace_id
-from agents import Agent, Tool, Runner, OpenAIChatCompletionsModel, trace
-from openai import AsyncOpenAI
+from agents import Agent, Tool, Runner, OpenAIChatCompletionsModel, logger, trace
+from openai import AsyncOpenAI, AsyncAzureOpenAI
 from dotenv import load_dotenv
 import os
 import json
@@ -19,9 +21,10 @@ from mcp_params import trader_mcp_server_params, researcher_mcp_server_params
 load_dotenv(override=True)
 
 deepseek_api_key = os.getenv("DEEPSEEK_API_KEY")
-google_api_key = os.getenv("GOOGLE_API_KEY")
+google_api_key = os.getenv("GEMINI_API_KEY")
 grok_api_key = os.getenv("GROK_API_KEY")
 openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
+
 
 DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
 GROK_BASE_URL = "https://api.x.ai/v1"
@@ -34,6 +37,12 @@ openrouter_client = AsyncOpenAI(base_url=OPENROUTER_BASE_URL, api_key=openrouter
 deepseek_client = AsyncOpenAI(base_url=DEEPSEEK_BASE_URL, api_key=deepseek_api_key)
 grok_client = AsyncOpenAI(base_url=GROK_BASE_URL, api_key=grok_api_key)
 gemini_client = AsyncOpenAI(base_url=GEMINI_BASE_URL, api_key=google_api_key)
+openai_client = AsyncAzureOpenAI(
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    api_version="2024-12-01-preview",
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    azure_deployment="gtp-4o-mini"
+)
 
 
 def get_model(model_name: str):
@@ -45,6 +54,8 @@ def get_model(model_name: str):
         return OpenAIChatCompletionsModel(model=model_name, openai_client=grok_client)
     elif "gemini" in model_name:
         return OpenAIChatCompletionsModel(model=model_name, openai_client=gemini_client)
+    elif "gpt-4o-mini" in model_name:
+        return OpenAIChatCompletionsModel(model=model_name, openai_client=openai_client)
     else:
         return model_name
 
@@ -65,7 +76,7 @@ async def get_researcher_tool(mcp_servers, model_name) -> Tool:
 
 
 class Trader:
-    def __init__(self, name: str, lastname="Trader", model_name="gpt-4o-mini"):
+    def __init__(self, name: str, lastname="Trader", model_name="gemini-2.5-flash"):
         self.name = name
         self.lastname = lastname
         self.agent = None
@@ -99,6 +110,7 @@ class Trader:
             else rebalance_message(self.name, strategy, account)
         )
         await Runner.run(self.agent, message, max_turns=MAX_TURNS)
+        
 
     async def run_with_mcp_servers(self):
         async with AsyncExitStack() as stack:
